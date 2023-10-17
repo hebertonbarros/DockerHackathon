@@ -29,6 +29,17 @@ cache_miss_log_template = '[{}] [INFO] Cache miss for key: {}'                  
 email_sent_log_template = '[{}] [INFO] Email sent to {} with subject: {}'                   # Notification logs
 email_delivery_failed_log_template = '[{}] [ERROR] Email delivery failed for message ID: {}'# Notification logs
 
+# New log templates to use related to ERRORs
+db_error_log_template = '[{}] [ERROR] Database error: {}'                    # Database error log
+auth_error_log_template = '[{}] [ERROR] Authentication failed for user: {}'  # Authentication error log
+authz_error_log_template = '[{}] [ERROR] Authorization error: {}'            # Authorization error log
+upload_error_log_template = '[{}] [ERROR] File upload failed: {}'            # File upload error log
+download_error_log_template = '[{}] [ERROR] File download failed: {}'        # File download error log
+api_error_log_template = '[{}] [ERROR] API request failed: {}'               # API error log
+session_error_log_template = '[{}] [ERROR] Session error: {}'                # Session error log
+app_error_log_template = '[{}] [ERROR] Application error: {}'                # General application error log
+
+
 
 # Sample data for generating random logs
 ip_addresses = [
@@ -205,12 +216,42 @@ email_subjects = [
     'Exclusive Offer: Upgrade Now!!!']
 
 
+db_errors = ['Connection to database server failed.',
+             'Connection timeout while trying to connect to the database.',
+             'Connection refused.',
+             'Connectio refused by peer.',
+             'SQL syntax errors.',
+             'SQL query execution error: especified table not found.',
+             'Constraint violations',
+             'Disk or resources errors'
+             ]
+
+
+authz_errors = ['Authorization error: Insufficient privileges for user: ' + str(random.choice(usernames)),
+                'Authorization error: Acces defined for user: ' + str(random.choice(usernames)),
+                'Authorizatin error: Invalid API token.'
+               ]
+
+api_errors = ['[ERROR] API request failed: GET /api/data - 404 Not Found.',
+              '[ERROR] API request failed: POST /api/update - 401 Unauthorized.',
+              '[ERROR] API request failed: PUT /api/resource - 500 Internal Server Error.']
+
+session_errors = ['[ERROR] Session error: User ' + str(random.choice(usernames)) + ' session expired unexpectedly.', 
+                  '[ERROR] Session error: Invalid session token received from user ' + str(random.choice(usernames)) + '.',
+                  '[ERROR] Session error: Session data corrupted for user ADMIN']
+
+
+app_errors = ['[ERROR] Application error: Exception thrown in main application logic.',
+              '[ERROR] Application error: Runtime error in API endpoint handling.',
+              '[ERROR] Application error: Unexpected state encountered in the application.']
+
+
 # Create a list to store each log entry
 log_entries = []
 
 
 # Generate 35K random log entries
-for _ in range(50): # Use 50 to test
+for _ in range(35000): # Use 50 to test
     
     # Generate random data points 
     rand_time = time.strftime('%d/%b/%Y:%H:%M:%S %z', time.localtime())
@@ -228,12 +269,16 @@ for _ in range(50): # Use 50 to test
     
 
     rand_custom_message = f'Processing time for API endpoint {random.choice(routes)}: {random.randint(1, 200)}ms'
-    
+
+
     log_type = random.choice(['access', 'app', 'db', 'container', 'web_server', 'security', 'custom',
                               'session', 'api_request', 'api_response', 'file_upload', 'file_download',
                               'error', 'critical_error', 'successful_login', 'failed_login',
                               'performance_cpu', 'performance_memory', 'performance_request_time',
-                              'cache_hit', 'cache_miss', 'email_sent', 'email_delivery_failed'])
+                              'cache_hit', 'cache_miss', 'email_sent', 'email_delivery_failed',
+                              # New log types added
+                              'database_err', 'auth_err', 'authz_err', 'upload_err', 
+                              'download_err', 'api_err', 'session_err', 'app'])
     
     if log_type == 'access':
         log_entry = access_log_template.format(rand_ip, rand_time, rand_route, rand_response_code)
@@ -282,6 +327,24 @@ for _ in range(50): # Use 50 to test
     elif log_type == 'email_delivery_failed':
         log_entry = email_delivery_failed_log_template.format(rand_time, random.randint(1, 1000))
     
+    elif log_type == 'database_err': #[{}] [ERROR] Database error: {} 
+        log_entry = db_error_log_template.format(rand_time, db_errors)
+    elif log_type == 'auth_err': #[{}] [ERROR] Authentication failed for user: {}
+        log_entry = auth_error_log_template.format(rand_time, f'[ERROR] Authentication failed for user: {rand_custom_message}')
+    elif log_type == 'authz_err': #[{}] [ERROR] Authorization error: {}
+        log_entry = authz_error_log_template.format(rand_time, random.choice(authz_errors))
+    elif log_type == 'upload_err': #[{}] [ERROR] File upload failed: {}
+        log_entry = upload_error_log_template.format(rand_time, f'[ERROR] File upload failed for user: {rand_username}')
+    elif log_type == 'download_err': #[{}] [ERROR] File download failed: {}
+        log_entry = download_error_log_template.format(rand_time, f'[ERROR] File download for user: {rand_username}')
+    elif log_type == 'api_err': #[{}] [ERROR] API request failed: {}
+        log_entry = api_error_log_template.format(rand_time, random.choice(api_errors))
+    elif log_type == 'session_err': #[{}] [ERROR] Session error: {}
+        log_entry = session_error_log_template.format(rand_time, random.choice(session_errors))
+    elif log_type == 'app': #[{}] [ERROR] Application error: {}
+        log_entry = app_error_log_template.format(rand_time, random.choice(app_errors))
+    
+
     log_entries.append(log_entry)
     # print(log_entry)
     # print(log_entries)

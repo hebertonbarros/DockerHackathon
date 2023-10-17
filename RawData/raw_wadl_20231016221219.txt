@@ -1,0 +1,50 @@
+[16/Oct/2023:22:12:19 -0500] [DEBUG] Error: Error: Processing time for API endpoint /view1.html: 140ms
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] Memory usage: 66%
+[16/Oct/2023:22:12:19 -0500] [INFO] Cache miss for key: Cache miss for key: Processing time for API endpoint index.html: 35ms
+[16/Oct/2023:22:12:19 -0500] [INFO] User Potterhead123 successfully logged in.
+[16/Oct/2023:22:12:19 -0500] [WARNING] API response: API response: /view1.html 403
+[16/Oct/2023:22:12:19 -0500] [INFO] User downloaded file: User downloaded file: /not-found
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] Request processing time: 125ms
+[16/Oct/2023:22:12:19 -0500] [DEBUG] Executed SQL query: SELECT * FROM prices
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] Memory usage: 37%
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] Request processing time: 768ms
+[16/Oct/2023:22:12:19 -0500] [INFO] User downloaded file: User downloaded file: /view1.html
+[16/Oct/2023:22:12:19 -0500] [INFO] User StarWarsFan33 successfully logged in.
+[16/Oct/2023:22:12:19 -0500] [DEBUG] User 'DanceDiva19' logged out.
+[16/Oct/2023:22:12:19 -0500] [INFO] Cache miss for key: Cache miss for key: Processing time for API endpoint /contact: 19ms
+[16/Oct/2023:22:12:19 -0500] [ERROR] Email delivery failed for message ID: 237
+[16/Oct/2023:22:12:19 -0500] [INFO] Cache hit for key: Cache hit for key: Processing time for API endpoint /admin: 46ms
+[16/Oct/2023:22:12:19 -0500] [CRITICAL] Critical Error: Critical Error: Processing time for API endpoint /about: 115ms
+[16/Oct/2023:22:12:19 -0500] [INFO] API request: API request: /admin POST
+[16/Oct/2023:22:12:19 -0500] [CUSTOM] Suspicious activity detected from IP address 192.168.2.4
+[16/Oct/2023:22:12:19 -0500] [INFO] API request: API request: /not-found OPTIONS
+[16/Oct/2023:22:12:19 -0500] [ERROR] Email delivery failed for message ID: 99
+[16/Oct/2023:22:12:19 -0500] [ERROR] Email delivery failed for message ID: 684
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] CPU usage: 41%
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] CPU usage: 50%
+[16/Oct/2023:22:12:19 -0500] [WARNING] Failed login attempt for user WARNING from IP SnowboarderPro.
+[16/Oct/2023:22:12:19 -0500] [WARNING] Suspicious activity detected from IP address 192.168.2.4
+[16/Oct/2023:22:12:19 -0500] [WARNING] Failed login attempt for user ERROR from IP GuitarHero55.
+[16/Oct/2023:22:12:19 -0500] [ERROR] Error: Error: Processing time for API endpoint /contact: 2ms
+[16/Oct/2023:22:12:19 -0500] [INFO] User session started: User session started: HistoryBuff88
+[16/Oct/2023:22:12:19 -0500] [DEBUG] Suspicious activity detected from IP address 192.168.2.4
+[16/Oct/2023:22:12:19 -0500] [INFO] Email sent to AnimeFanatic20 with subject: Subject: Join our Team
+192.168.1.6 - - [16/Oct/2023:22:12:19 -0500] "GET //user/<username>" 304
+192.168.5.7 - - [16/Oct/2023:22:12:19 -0500] "GET //add-to-cart/<product_id>" 404
+16/Oct/2023:22:12:19 -0500Z container stopped
+[16/Oct/2023:22:12:19 -0500] [CUSTOM] Error: Error: Processing time for API endpoint /products: 108ms
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] Memory usage: 73%
+[16/Oct/2023:22:12:19 -0500] [INFO] User DreamWeaver89 successfully logged in.
+[16/Oct/2023:22:12:19 -0500] [CUSTOM] Request to login received with method POST
+16/Oct/2023:22:12:19 -0500Z container running
+16/Oct/2023:22:12:19 -0500Z container stopped
+192.168.1.4 - - [16/Oct/2023:22:12:19 -0500] "GET //products" 302
+[16/Oct/2023:22:12:19 -0500] [CUSTOM] User 'MovieDirectorX' logged out.
+[16/Oct/2023:22:12:19 -0500] [INFO] User 'MidnightHawk' logged in.
+[16/Oct/2023:22:12:19 -0500] [INFO] API request: API request: /search?q=<query> POST
+[16/Oct/2023:22:12:19 -0500] [PERFORMANCE] Request processing time: 153ms
+[16/Oct/2023:22:12:19 -0500] [INFO] User session started: User session started: WildlifeWatcher
+[16/Oct/2023:22:12:19 -0500] [INFO] User Fashionista78 successfully logged in.
+[16/Oct/2023:22:12:19 -0500] [CRITICAL] Critical Error: Critical Error: Processing time for API endpoint images/logo.png: 131ms
+[16/Oct/2023:22:12:19 -0500] [INFO] User uploaded file: User uploaded file: index.html
+[16/Oct/2023:22:12:19 -0500] [INFO] Email sent to LunaExplorer with subject: Subject: Welcome - Get Started!

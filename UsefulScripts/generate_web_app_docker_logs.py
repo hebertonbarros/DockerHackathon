@@ -5,18 +5,18 @@ import datetime
 
 
 # Sample log templates to use
-access_log_template = '{} - - [{}] "GET /{}" {}'                   # Application logs
+access_log_template = '[{}] "GET /{} Status code: " {}'            # Application logs
 app_log_template = '[{}] [{}] {}'                                  # Application logs
 db_log_template = '[{}] [DEBUG] Executed SQL query: {}'            # Database debugging logs
-container_log_template = '{}Z container {}'                        # Docker container logs
-web_server_log_template = '[{}] [{}] {}'                           # Web server logs
+container_log_template = '[{}] [INFO] container {}'                # Docker container logs
+web_server_log_template = '[{}] [CUSTOM] [{}] {}'                  # Web server logs
 security_log_template = '[{}] [{}] {}'                             # Security logs
 custom_log_template = '[{}] [CUSTOM] {}'                           # Any custom logs
 session_log_template = '[{}] [INFO] User session started: {}'      # Session management log
 api_request_log_template = '[{}] [INFO] API request: {} {}'        # API request logs 
 api_response_log_template = '[{}] [{}] API response: {} {}'        # API request logs  
-file_upload_log_template = '[{}] [INFO] User uploaded file: {}'    # File upload/download logs
-file_download_log_template = '[{}] [INFO] User downloaded file: {}'# File upload/download logs
+file_upload_log_template = '[{}] [INFO] User uploaded file: {}'      # File upload/download logs
+file_download_log_template = '[{}] [INFO] User downloaded file: {}'  # File upload/download logs
 error_log_template = '[{}] [{}] Error: {}'                         # Error handling
 critical_error_log_template = '[{}] [CRITICAL] Critical Error: {}' # Error handling
 successful_login_log_template = '[{}] [INFO] User {} successfully logged in.'               # Authentication
@@ -227,23 +227,39 @@ db_errors = ['Connection to database server failed.',
              ]
 
 
-authz_errors = ['Authorization error: Insufficient privileges for user: ' + str(random.choice(usernames)),
-                'Authorization error: Acces defined for user: ' + str(random.choice(usernames)),
-                'Authorizatin error: Invalid API token.'
+authz_errors = ['Insufficient privileges for user: ' + str(random.choice(usernames)),
+                'Acces defined for user: ' + str(random.choice(usernames)),
+                'Invalid API token.'
                ]
 
-api_errors = ['[ERROR] API request failed: GET /api/data - 404 Not Found.',
-              '[ERROR] API request failed: POST /api/update - 401 Unauthorized.',
-              '[ERROR] API request failed: PUT /api/resource - 500 Internal Server Error.']
 
-session_errors = ['[ERROR] Session error: User ' + str(random.choice(usernames)) + ' session expired unexpectedly.', 
-                  '[ERROR] Session error: Invalid session token received from user ' + str(random.choice(usernames)) + '.',
-                  '[ERROR] Session error: Session data corrupted for user ADMIN']
+api_errors = ['GET /api/data - 404 Not Found.',
+              'POST /api/update - 401 Unauthorized.',
+              'PUT /api/resource - 500 Internal Server Error.',
+              'DELETE /api/delete - 401 Unauthorized.']
 
 
-app_errors = ['[ERROR] Application error: Exception thrown in main application logic.',
-              '[ERROR] Application error: Runtime error in API endpoint handling.',
-              '[ERROR] Application error: Unexpected state encountered in the application.']
+session_errors = ['User ' + str(random.choice(usernames)) + ' session expired unexpectedly.', 
+                  'Invalid session token received from user ' + str(random.choice(usernames)) + '.',
+                  'Session data corrupted for user ADMIN']
+
+
+app_errors = ['Exception thrown in main application logic.',
+              'Runtime error in API endpoint handling.',
+              'Unexpected state encountered in the application.']
+
+
+file_download_errors = ['File \'document.docx\' not found.',
+                       'Unauthorized access to file \'report.pdf\'.',
+                       'Unable to retrieve file \'presentation.pptx\'.']
+
+
+file_updaload_errors = ['Error while processing uploaded file \'document.pdf\'.',
+                       'File size exceeds the maximum allowed limit.',
+                       'Unsupported file format for \'image.png\'.',
+                       'The file is corrupted or its format is unsupported.']
+
+
 
 
 # Create a list to store each log entry
@@ -280,8 +296,8 @@ for _ in range(35000): # Use 50 to test
                               'database_err', 'auth_err', 'authz_err', 'upload_err', 
                               'download_err', 'api_err', 'session_err', 'app'])
     
-    if log_type == 'access':
-        log_entry = access_log_template.format(rand_ip, rand_time, rand_route, rand_response_code)
+    if log_type == 'access': # '[{}] "GET /{}" {}' 
+        log_entry = access_log_template.format(rand_time, rand_route, rand_response_code)
     elif log_type == 'app':
         log_entry1 = app_log_template.format(rand_time, rand_http_status, f'User \'{rand_username}\' logged in.')
         log_entry2 = app_log_template.format(rand_time, rand_http_status, f'User \'{rand_username}\' logged out.')
@@ -295,19 +311,19 @@ for _ in range(35000): # Use 50 to test
     elif log_type == 'security':
         log_entry = security_log_template.format(rand_time, rand_http_status, rand_security_event)
     elif log_type == 'session':
-        log_entry = session_log_template.format(rand_time, f'User session started: {rand_username}')
+        log_entry = session_log_template.format(rand_time, f'{rand_username}')
     elif log_type == 'api_request':
-        log_entry = api_request_log_template.format(rand_time, f'API request: {rand_route}', rand_http_method)
+        log_entry = api_request_log_template.format(rand_time, f'{rand_route}', rand_http_method)
     elif log_type == 'api_response':
-        log_entry = api_response_log_template.format(rand_time, rand_http_status, f'API response: {rand_route}', rand_response_code)
+        log_entry = api_response_log_template.format(rand_time, rand_http_status, f'{rand_route}', rand_response_code)
     elif log_type == 'file_upload':
-        log_entry = file_upload_log_template.format(rand_time, f'User uploaded file: {rand_route}')
+        log_entry = file_upload_log_template.format(rand_time, f'{rand_route}')
     elif log_type == 'file_download':
-        log_entry = file_download_log_template.format(rand_time, f'User downloaded file: {rand_route}')
+        log_entry = file_download_log_template.format(rand_time, f'{rand_route}')
     elif log_type == 'error':
-        log_entry = error_log_template.format(rand_time, rand_http_status, f'Error: {rand_custom_message}')
+        log_entry = error_log_template.format(rand_time, rand_http_status, f'{rand_custom_message}')
     elif log_type == 'critical_error':
-        log_entry = critical_error_log_template.format(rand_time, f'Critical Error: {rand_custom_message}')
+        log_entry = critical_error_log_template.format(rand_time, f'{rand_custom_message}')
     elif log_type == 'successful_login':
         log_entry = successful_login_log_template.format(rand_time, rand_username)
     elif log_type == 'failed_login':
@@ -319,24 +335,24 @@ for _ in range(35000): # Use 50 to test
     elif log_type == 'performance_request_time':
         log_entry = performance_request_time_log_template.format(rand_time, random.randint(1, 1000))
     elif log_type == 'cache_hit':
-        log_entry = cache_hit_log_template.format(rand_time, f'Cache hit for key: {rand_custom_message}')
+        log_entry = cache_hit_log_template.format(rand_time, f'{rand_custom_message}')
     elif log_type == 'cache_miss':
-        log_entry = cache_miss_log_template.format(rand_time, f'Cache miss for key: {rand_custom_message}')
+        log_entry = cache_miss_log_template.format(rand_time, f'{rand_custom_message}')
     elif log_type == 'email_sent':
-        log_entry = email_sent_log_template.format(rand_time, rand_username, f'Subject: {rand_subject}')
+        log_entry = email_sent_log_template.format(rand_time, rand_username, f'{rand_subject}')
     elif log_type == 'email_delivery_failed':
         log_entry = email_delivery_failed_log_template.format(rand_time, random.randint(1, 1000))
     
     elif log_type == 'database_err': #[{}] [ERROR] Database error: {} 
-        log_entry = db_error_log_template.format(rand_time, db_errors)
+        log_entry = db_error_log_template.format(rand_time, random.choice(db_errors))
     elif log_type == 'auth_err': #[{}] [ERROR] Authentication failed for user: {}
-        log_entry = auth_error_log_template.format(rand_time, f'[ERROR] Authentication failed for user: {rand_custom_message}')
+        log_entry = auth_error_log_template.format(rand_time, f'{rand_username}')
     elif log_type == 'authz_err': #[{}] [ERROR] Authorization error: {}
         log_entry = authz_error_log_template.format(rand_time, random.choice(authz_errors))
     elif log_type == 'upload_err': #[{}] [ERROR] File upload failed: {}
-        log_entry = upload_error_log_template.format(rand_time, f'[ERROR] File upload failed for user: {rand_username}')
+        log_entry = upload_error_log_template.format(rand_time, random.choice(file_updaload_errors)) 
     elif log_type == 'download_err': #[{}] [ERROR] File download failed: {}
-        log_entry = download_error_log_template.format(rand_time, f'[ERROR] File download for user: {rand_username}')
+        log_entry = download_error_log_template.format(rand_time, random.choice(file_download_errors))
     elif log_type == 'api_err': #[{}] [ERROR] API request failed: {}
         log_entry = api_error_log_template.format(rand_time, random.choice(api_errors))
     elif log_type == 'session_err': #[{}] [ERROR] Session error: {}
@@ -349,6 +365,7 @@ for _ in range(35000): # Use 50 to test
     # print(log_entry)
     # print(log_entries)
     
+
 
 
 
@@ -368,4 +385,3 @@ try:
 
 except Exception as e:
     print("An error occurred while writing the log entries to disk:", e)
-    

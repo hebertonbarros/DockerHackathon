@@ -1,19 +1,23 @@
 import random
 import datetime
 import time
+import uuid
+import hashlib
 
 class DatabaseContainerLogGenerator:
 
     def __init__(self):
+        raw_id = uuid.uuid4().hex
+        self.container_id = hashlib.sha256(raw_id.encode()).hexdigest()[:64]
 
         self.container_init_msgs = [
             '[INFO] Container runtime has been chosen.',
             '[INFO] Pulling image from registry...',
             '[INFO] Image successfully pulled from registry.',
             '[INFO] Creating container from image...',
-            '[INFO] Container created with ID [container_id].',
-            '[INFO] Starting container [container_id]...',
-            '[INFO] Container [container_id] started.',
+            f'[INFO] Container created with ID {self.container_id}.',
+            f'[INFO] Starting container {self.container_id}...',
+            f'[INFO] Container {self.container_id} started.',
             '[INFO] Establishing environment variables...',
             '[INFO] Environment variables set.',
             '[INFO] Exposing ports to the host machine...',

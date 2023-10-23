@@ -1,9 +1,24 @@
 import random
 import datetime
+import time
 
 class DatabaseContainerLogGenerator:
 
     def __init__(self):
+
+        self.container_init_msgs = [
+            '[INFO] Container runtime has been chosen.',
+            '[INFO] Pulling image from registry...',
+            '[INFO] Image successfully pulled from registry.',
+            '[INFO] Creating container from image...',
+            '[INFO] Container created with ID [container_id].',
+            '[INFO] Starting container [container_id]...',
+            '[INFO] Container [container_id] started.',
+            '[INFO] Establishing environment variables...',
+            '[INFO] Environment variables set.',
+            '[INFO] Exposing ports to the host machine...',
+            '[INFO] Ports successfully exposed.'
+        ]
         self.initialization_msgs = [
             '[INFO] Initializing database...',
             '[INFO] Loading configuration...',
@@ -64,32 +79,45 @@ class DatabaseContainerLogGenerator:
             '[WARNING] Unplanned shutdown - potential data loss!'
         ]
 
-    def generate_log_timestamp(self):
-        return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+    def generate_log(self, phase):
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
-    def generate_log(self):
-        log_categories = [self.initialization_msgs, self.query_logs, self.error_logs, self.health_check_logs, self.shutdown_msgs]
-        chosen_category = random.choices(log_categories, weights=[5, 70, 10, 10, 5], k=1)[0]
-        log_message = random.choice(chosen_category)
-        return f"{self.generate_log_timestamp()} {log_message}"
+        if phase == "container_init":
+            log_message = random.choice(self.container_init_msgs)
+        elif phase == "db_init":
+            log_message = random.choice(self.initialization_msgs)
+        elif phase == "runtime":
+            log_categories = [self.query_logs, self.error_logs, self.health_check_logs, self.shutdown_msgs]
+            chosen_category = random.choices(log_categories, weights=[70, 10, 10, 10], k=1)[0]
+            log_message = random.choice(chosen_category)
+        else:
+            log_message = '[ERROR] Invalid log phase specified.'
 
+        return f"{timestamp} {log_message}"
 
 def save_log_to_txt(log, filename='database_logs.txt'):
     with open(filename, mode='a', encoding='utf-8') as file:
         file.write(log + '\n')
 
+def simulate_container_lifecycle(generator, log_count=35000, filename='database_logs.txt'):
+    phases = ["container_init", "db_init", "runtime"]
+    
+    for phase in phases:
+        if phase == "runtime":
+            count = log_count - 20
+        else:
+            count = 10
 
-def main():
-    generator = DatabaseContainerLogGenerator()
-    log_count = 35000 
-
-    for _ in range(log_count):
-        log = generator.generate_log()
-        #print(log) 
-        save_log_to_txt(log)
+        for _ in range(count):
+            log = generator.generate_log(phase)
+            save_log_to_txt(log, filename)
+            time.sleep(0.01)
 
     print(f"Generated {log_count} logs.")
 
+def main():
+    generator = DatabaseContainerLogGenerator()
+    simulate_container_lifecycle(generator)
 
 if __name__ == "__main__":
     main()

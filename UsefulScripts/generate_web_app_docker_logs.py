@@ -5,39 +5,36 @@ import datetime
 
 
 # Sample log templates to use
-access_log_template = '[{}] "GET /{} Status code: " {}'            # Application logs
-app_log_template = '[{}] [{}] {}'                                  # Application logs
-db_log_template = '[{}] [DEBUG] Executed SQL query: {}'            # Database debugging logs
-container_log_template = '[{}] [INFO] container {}'                # Docker container logs
-web_server_log_template = '[{}] [CUSTOM] [{}] {}'                  # Web server logs
-security_log_template = '[{}] [{}] {}'                             # Security logs
-custom_log_template = '[{}] [CUSTOM] {}'                           # Any custom logs
-session_log_template = '[{}] [INFO] User session started: {}'      # Session management log
-api_request_log_template = '[{}] [INFO] API request: {} {}'        # API request logs 
-api_response_log_template = '[{}] [{}] API response: {} {}'        # API request logs  
-file_upload_log_template = '[{}] [INFO] User uploaded file: {}'      # File upload/download logs
-file_download_log_template = '[{}] [INFO] User downloaded file: {}'  # File upload/download logs
-error_log_template = '[{}] [{}] Error: {}'                         # Error handling
-critical_error_log_template = '[{}] [CRITICAL] Critical Error: {}' # Error handling
-successful_login_log_template = '[{}] [INFO] User {} successfully logged in.'               # Authentication
-failed_login_log_template = '[{}] [WARNING] Failed login attempt for user {} from IP {}.'   # Authentication
-performance_cpu_log_template = '[{}] [PERFORMANCE] CPU usage: {}%'                          # Performance metrics logs
-performance_memory_log_template = '[{}] [PERFORMANCE] Memory usage: {}%'                    # Performance metrics logs
-performance_request_time_log_template = '[{}] [PERFORMANCE] Request processing time: {}ms'  # Performance metrics logs
-cache_hit_log_template = '[{}] [INFO] Cache hit for key: {}'                                # Cache logs
-cache_miss_log_template = '[{}] [INFO] Cache miss for key: {}'                              # Cache logs
-email_sent_log_template = '[{}] [INFO] Email sent to {} with subject: {}'                   # Notification logs
-email_delivery_failed_log_template = '[{}] [ERROR] Email delivery failed for message ID: {}'# Notification logs
+access_log_template = '{} INFO GET /{} Status code: " {}'            # Application logs
+app_log_template = '{} {} {}'                                    # Application logs
+db_log_template = '{} DEBUG Executed SQL query: {}'              # Database debugging logs
+container_log_template = '{} INFO container {}'                  # Docker container logs
+security_log_template = '{} {} {}'                               # Security logs
+session_log_template = '{} INFO User session started: {}'        # Session management log
+api_request_log_template = '{} INFO API request: {} {}'          # API request logs 
+api_response_log_template = '{} {} API response: {} {}'          # API request logs  
+file_upload_log_template = '{} INFO User uploaded file: {}'        # File upload/download logs
+file_download_log_template = '{} INFO User downloaded file: {}'    # File upload/download logs
+critical_error_log_template = '{} CRITICAL Critical Error: {}'   # Error handling
+successful_login_log_template = '{} INFO User {} successfully logged in.'               # Authentication
+failed_login_log_template = '{} WARNING Failed login attempt for user {} from IP {}.'   # Authentication
+performance_cpu_log_template = '{} PERFORMANCE CPU usage: {}%'                          # Performance metrics logs
+performance_memory_log_template = '{} PERFORMANCE Memory usage: {}%'                    # Performance metrics logs
+performance_request_time_log_template = '{} PERFORMANCE Request processing time: {}ms'  # Performance metrics logs
+cache_hit_log_template = '{} INFO Cache hit for key: {}'                                # Cache logs
+cache_miss_log_template = '{} INFO Cache miss for key: {}'                              # Cache logs
+email_sent_log_template = '{} INFO Email sent to {} with subject: {}'                   # Notification logs
+email_delivery_failed_log_template = '{} ERROR Email delivery failed for message ID: {}'# Notification logs
 
 # New log templates to use related to ERRORs
-db_error_log_template = '[{}] [ERROR] Database error: {}'                    # Database error log
-auth_error_log_template = '[{}] [ERROR] Authentication failed for user: {}'  # Authentication error log
-authz_error_log_template = '[{}] [ERROR] Authorization error: {}'            # Authorization error log
-upload_error_log_template = '[{}] [ERROR] File upload failed: {}'            # File upload error log
-download_error_log_template = '[{}] [ERROR] File download failed: {}'        # File download error log
-api_error_log_template = '[{}] [ERROR] API request failed: {}'               # API error log
-session_error_log_template = '[{}] [ERROR] Session error: {}'                # Session error log
-app_error_log_template = '[{}] [ERROR] Application error: {}'                # General application error log
+db_error_log_template = '{} ERROR Database error: {}'                                   # Database error log
+auth_error_log_template = '{} ERROR Authentication failed for user: {}'                 # Authentication error log
+authz_error_log_template = '{} ERROR Authorization error: {}'                           # Authorization error log
+upload_error_log_template = '{} ERROR File upload failed: {}'                           # File upload error log
+download_error_log_template = '{} ERROR File download failed: {}'                       # File download error log
+api_error_log_template = '{} ERROR API request failed: {}'                              # API error log
+session_error_log_template = '{} ERROR Session error: {}'                               # Session error log
+app_error_log_template = '{} ERROR Application error: {}'                               # General application error log
 
 
 
@@ -155,7 +152,6 @@ routes = ['index.html',
           'images/logo.png', 
           'api/data',
           '/admin',
-          '/',
           '/about',
           '/contact',
           '/user/<username>',
@@ -179,7 +175,7 @@ sql_queries = ['SELECT * FROM users WHERE username=\'john_doe\'',
                'SELECT DISTINCT users.user_id, users.username FROM users INNER JOIN prices ON users.user_id = prices.user_id',
                'SELECT * FROM prices',
                'SELECT product_name, MAX(price) AS max_price FROM products INNER JOIN prices ON products.product_id = prices.product_id',
-               'SELECT product_name, price FROM products INNER JOIN prices ON products.product_id = prices.product_idWHERE price < 50']
+               'SELECT product_name, price FROM products INNER JOIN prices ON products.product_id = prices.product_id WHERE price < 50']
 
 
 container_actions = ['started', 'running', 'paused', 'stopped', 'exited', 'upgrading']
@@ -187,7 +183,7 @@ container_actions = ['started', 'running', 'paused', 'stopped', 'exited', 'upgra
 web_server_actions = ['Listening on port 80', 
                       'Request to ' +  str(random.choice(routes)) + ' resulted in ' + str(random.choice(response_codes)),
                       'Listening on port 443 (HTTPS)',
-                      'Request ' +  str(random.choice(routes)) + ' resulted in 200 (OK)',
+                      'Request to ' +  str(random.choice(routes)) + ' resulted in 200 (OK)',
                       'Request to ' +  str(random.choice(routes)) + ' resulted in 401 (Unauthorized)',
                       'Request to ' +  str(random.choice(routes)) + ' resulted in 301 (Redirect)',
                       'Request to ' +  str(random.choice(routes)) + ' resulted in 204 (No content)',
@@ -209,7 +205,7 @@ email_subjects = [
     'Password Reset Request',
     'New Features & Updates',
     'Subscription Renewal',
-    'Invoice for [App]',
+    'Invoice for [Application]',
     'Feedback Request: Help Us',
     'Join our Team',
     'Security Alert: Unusual Activity',
@@ -219,7 +215,7 @@ email_subjects = [
 db_errors = ['Connection to database server failed.',
              'Connection timeout while trying to connect to the database.',
              'Connection refused.',
-             'Connectio refused by peer.',
+             'Connection refused by peer.',
              'SQL syntax errors.',
              'SQL query execution error: especified table not found.',
              'Constraint violations',
@@ -283,7 +279,7 @@ for _ in range(35000): # Use 50 to test
     rand_security_event = random.choice(security_events)
     rand_subject = random.choice(email_subjects)
     
-
+    
     rand_custom_message = f'Processing time for API endpoint {random.choice(routes)}: {random.randint(1, 200)}ms'
 
 
@@ -296,7 +292,7 @@ for _ in range(35000): # Use 50 to test
                               'database_err', 'auth_err', 'authz_err', 'upload_err', 
                               'download_err', 'api_err', 'session_err', 'app'])
     
-    if log_type == 'access': # '[{}] "GET /{}" {}' 
+    if log_type == 'access':
         log_entry = access_log_template.format(rand_time, rand_route, rand_response_code)
     elif log_type == 'app':
         log_entry1 = app_log_template.format(rand_time, rand_http_status, f'User \'{rand_username}\' logged in.')
@@ -306,8 +302,6 @@ for _ in range(35000): # Use 50 to test
         log_entry = db_log_template.format(rand_time, rand_sql_query)
     elif log_type == 'container':
         log_entry = container_log_template.format(rand_time, rand_container_action)
-    elif log_type == 'web_server':
-        log_entry = web_server_log_template.format(rand_time, rand_http_status, rand_web_server_action)
     elif log_type == 'security':
         log_entry = security_log_template.format(rand_time, rand_http_status, rand_security_event)
     elif log_type == 'session':
@@ -320,8 +314,6 @@ for _ in range(35000): # Use 50 to test
         log_entry = file_upload_log_template.format(rand_time, f'{rand_route}')
     elif log_type == 'file_download':
         log_entry = file_download_log_template.format(rand_time, f'{rand_route}')
-    elif log_type == 'error':
-        log_entry = error_log_template.format(rand_time, rand_http_status, f'{rand_custom_message}')
     elif log_type == 'critical_error':
         log_entry = critical_error_log_template.format(rand_time, f'{rand_custom_message}')
     elif log_type == 'successful_login':
@@ -342,22 +334,21 @@ for _ in range(35000): # Use 50 to test
         log_entry = email_sent_log_template.format(rand_time, rand_username, f'{rand_subject}')
     elif log_type == 'email_delivery_failed':
         log_entry = email_delivery_failed_log_template.format(rand_time, random.randint(1, 1000))
-    
-    elif log_type == 'database_err': #[{}] [ERROR] Database error: {} 
+    elif log_type == 'database_err':
         log_entry = db_error_log_template.format(rand_time, random.choice(db_errors))
-    elif log_type == 'auth_err': #[{}] [ERROR] Authentication failed for user: {}
+    elif log_type == 'auth_err':
         log_entry = auth_error_log_template.format(rand_time, f'{rand_username}')
-    elif log_type == 'authz_err': #[{}] [ERROR] Authorization error: {}
+    elif log_type == 'authz_err':
         log_entry = authz_error_log_template.format(rand_time, random.choice(authz_errors))
-    elif log_type == 'upload_err': #[{}] [ERROR] File upload failed: {}
+    elif log_type == 'upload_err':
         log_entry = upload_error_log_template.format(rand_time, random.choice(file_updaload_errors)) 
-    elif log_type == 'download_err': #[{}] [ERROR] File download failed: {}
+    elif log_type == 'download_err':
         log_entry = download_error_log_template.format(rand_time, random.choice(file_download_errors))
-    elif log_type == 'api_err': #[{}] [ERROR] API request failed: {}
+    elif log_type == 'api_err':
         log_entry = api_error_log_template.format(rand_time, random.choice(api_errors))
-    elif log_type == 'session_err': #[{}] [ERROR] Session error: {}
+    elif log_type == 'session_err':
         log_entry = session_error_log_template.format(rand_time, random.choice(session_errors))
-    elif log_type == 'app': #[{}] [ERROR] Application error: {}
+    elif log_type == 'app':
         log_entry = app_error_log_template.format(rand_time, random.choice(app_errors))
     
 
@@ -385,3 +376,7 @@ try:
 
 except Exception as e:
     print("An error occurred while writing the log entries to disk:", e)
+
+
+
+

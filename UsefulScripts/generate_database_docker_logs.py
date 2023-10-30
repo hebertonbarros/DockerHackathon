@@ -92,7 +92,7 @@ class DatabaseContainerLogGenerator:
             log_message = random.choice(self.initialization_msgs)
         elif phase == "runtime":
             log_categories = [self.query_logs, self.error_logs, self.health_check_logs, self.shutdown_msgs]
-            chosen_category = random.choices(log_categories, weights=[70, 10, 10, 10], k=1)[0]
+            chosen_category = random.choices(log_categories, weights=[25, 25, 25, 25], k=1)[0]
             log_message = random.choice(chosen_category)
         else:
             log_message = '[ERROR] Invalid log phase specified.'

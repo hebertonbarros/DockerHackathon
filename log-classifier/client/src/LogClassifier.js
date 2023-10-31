@@ -1,0 +1,147 @@
+import React, { useEffect, useState } from "react";
+import Papa from "papaparse";
+import axios from "axios";
+import backgroundImage from "./assets/background.png";
+import TextOutput from "./TextOutput";
+
+const LogClassifier = () => {
+  // const [isMoved, setIsMoved] = useState(false);
+  // const moveButtonToLeft = () => {
+  //   setIsMoved(true);
+  // };
+
+  const [showOutputArea, setShowOutputArea] = useState(false);
+  const [showTextBox, setShowTextBox] = useState(false);
+  const [displayData, setDisplayData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // Use a setTimeout to show the text box after 1 second
+    const timer = setTimeout(() => {
+      setShowTextBox(true);
+    }, 5000);
+
+    // Clear the timeout to prevent it from firing if the component unmounts
+    return () => clearTimeout(timer);
+  }, []);
+
+  async function readCSVFile(file) {
+    return new Promise((resolve, reject) => {
+      Papa.parse(file, {
+        complete: (result) => {
+          resolve(result.data);
+        },
+        header: true, // Set this to true if the CSV file has a header row
+        skipEmptyLines: true,
+        error: (error) => {
+          reject(error.message);
+        },
+      });
+    });
+  }
+
+  const fetchData = async () => {
+    try {
+      // Send a GET request to the Flask API endpoint
+      const response = await axios.get("http://127.0.0.1:3010/api/analyzeLogs");
+
+      // Access the JSON data from the response
+      const data = response.data;
+
+      // Use the data as needed
+      console.log("Data from Flask API:", data);
+      setDisplayData(data);
+
+      // You can perform further actions with the data here
+    } catch (error) {
+      // Handle any errors that may occur during the request
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  async function handleFileUpload(event) {
+    const file = event.target.files[0];
+
+    try {
+      const csvData = await readCSVFile(file);
+      console.log("CSV Data:", csvData);
+      setShowOutputArea(true);
+      // You can now use 'csvData' in your React component or process it as needed.
+    } catch (error) {
+      console.error("Error reading CSV file:", error);
+    }
+  }
+
+  return (
+    <>
+      <div
+        style={{
+          position: "relative",
+          height: "100vh",
+          width: "100vw",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundImage: `url(${backgroundImage})`,
+          paddingLeft: "2%",
+          color: "#D5D7DF",
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            width: "30%",
+            position: "absolute",
+            left: showOutputArea ? "10px" : "50%",
+            transform: showOutputArea ? "translateX(0)" : "translateX(-50%)",
+            transition: "left 0.5s, transform 0.5s",
+          }}
+        >
+          <h2>Docker Log Sentiment Analyzer</h2>
+          <input
+            type="file"
+            accept=".csv"
+            onChange={handleFileUpload}
+            style={{
+              border: "1px solid #D5D7DF",
+              padding: "10px",
+              borderRadius: "10px",
+            }}
+          />
+        </div>
+      <br/>
+
+      {/* Log output area */}
+      {showOutputArea ? (
+        // <div style={{ display: 'inline-block'}}>
+        //   HII
+        // </div>
+        <div
+          style={{
+            width: "50%",
+            height: "90vh",
+            fontFamily: "monospace",
+            color: "white",
+            border: "1px solid #D5D7DF",
+            borderRadius: "10px",
+            marginLeft: '5%',
+            overflow: "scroll",
+            opacity: showTextBox ? 1 : 0,
+            transition: 'opacity 1s',
+          }}
+        >
+          <TextOutput data={displayData} />
+        </div>
+      ) : (
+        <></>
+      )}
+      </div>
+    </>
+  );
+};
+
+export default LogClassifier;

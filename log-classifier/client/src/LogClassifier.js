@@ -18,14 +18,15 @@ const LogClassifier = () => {
   }, [inputData]);
 
   useEffect(() => {
-    // Use a setTimeout to show the text box after 1 second
-    const timer = setTimeout(() => {
-      setShowTextBox(true);
-    }, 5000);
-
-    // Clear the timeout to prevent it from firing if the component unmounts
-    return () => clearTimeout(timer);
-  }, []);
+    if (showOutputArea){
+      const timer = setTimeout(() => {
+        setShowTextBox(true);
+      }, 5000);
+  
+      // Clear the timeout to prevent it from firing if the component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [showOutputArea]);
 
   async function readCSVFile(file) {
     return new Promise((resolve, reject) => {

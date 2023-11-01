@@ -106,7 +106,7 @@ const LogClassifier = () => {
             paddingRight: showTextBox ? "20%" : "0",
           }}
         >
-          <h2>Docker Log Sentiment Analyzer</h2>
+          <h2>Docker Log Sentiment Analyzer 🚀</h2>
           <input
             type="file"
             accept=".csv"

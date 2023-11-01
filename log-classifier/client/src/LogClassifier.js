@@ -5,18 +5,17 @@ import backgroundImage from "./assets/background.png";
 import TextOutput from "./TextOutput";
 
 const LogClassifier = () => {
-  // const [isMoved, setIsMoved] = useState(false);
-  // const moveButtonToLeft = () => {
-  //   setIsMoved(true);
-  // };
 
   const [showOutputArea, setShowOutputArea] = useState(false);
   const [showTextBox, setShowTextBox] = useState(false);
   const [displayData, setDisplayData] = useState([]);
+  const [inputData, setInputData] = useState([]);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (inputData.length > 0) {
+      fetchData();
+    }
+  }, [inputData]);
 
   useEffect(() => {
     // Use a setTimeout to show the text box after 1 second
@@ -46,14 +45,18 @@ const LogClassifier = () => {
   const fetchData = async () => {
     try {
       // Send a GET request to the Flask API endpoint
-      const response = await axios.get("http://127.0.0.1:3010/api/analyzeLogs");
+      // const response = await axios.get("http://127.0.0.1:3010/api/analyzeLogs");
+      const response = await axios.post(
+        "http://127.0.0.1:3010/api/analyzeLogs",
+        { log_data: inputData }
+      );
 
       // Access the JSON data from the response
-      const data = response.data;
+      const data = response.data.result;
 
       // Use the data as needed
-      console.log("Data from Flask API:", data);
-      setDisplayData(data);
+      console.log("Data from Flask API:", JSON.parse(data));
+      setDisplayData(JSON.parse(data));
 
       // You can perform further actions with the data here
     } catch (error) {
@@ -68,6 +71,7 @@ const LogClassifier = () => {
     try {
       const csvData = await readCSVFile(file);
       console.log("CSV Data:", csvData);
+      setInputData(csvData);
       setShowOutputArea(true);
       // You can now use 'csvData' in your React component or process it as needed.
     } catch (error) {
@@ -96,9 +100,10 @@ const LogClassifier = () => {
           style={{
             width: "30%",
             position: "absolute",
-            left: showOutputArea ? "10px" : "50%",
+            left: showOutputArea ? "60px" : "50%",
             transform: showOutputArea ? "translateX(0)" : "translateX(-50%)",
-            transition: "left 0.5s, transform 0.5s",
+            transition: "left 0.9s, transform 0.9s",
+            paddingRight: showTextBox ? "20%" : "0",
           }}
         >
           <h2>Docker Log Sentiment Analyzer</h2>
@@ -113,32 +118,30 @@ const LogClassifier = () => {
             }}
           />
         </div>
-      <br/>
+        <br />
 
-      {/* Log output area */}
-      {showOutputArea ? (
-        // <div style={{ display: 'inline-block'}}>
-        //   HII
-        // </div>
-        <div
-          style={{
-            width: "50%",
-            height: "90vh",
-            fontFamily: "monospace",
-            color: "white",
-            border: "1px solid #D5D7DF",
-            borderRadius: "10px",
-            marginLeft: '5%',
-            overflow: "scroll",
-            opacity: showTextBox ? 1 : 0,
-            transition: 'opacity 1s',
-          }}
-        >
-          <TextOutput data={displayData} />
-        </div>
-      ) : (
-        <></>
-      )}
+        {/* Log output area */}
+        {showOutputArea ? (
+          <div
+            style={{
+              width: "60%",
+              height: "90vh",
+              fontFamily: "monospace",
+              color: "white",
+              border: "1px solid #D5D7DF",
+              borderRadius: "10px",
+              position: "absolute",
+              right: "60px",
+              overflow: "scroll",
+              opacity: showTextBox ? 1 : 0,
+              transition: "opacity 1s",
+            }}
+          >
+            <TextOutput data={displayData} />
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

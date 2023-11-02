@@ -13,37 +13,38 @@ function TextOutput({ data }) {
       }}
     >
       {data?.map((item, index) => {
-        if (item.sentiment === "error")
+        console.log(item.predicted_sentiment)
+        if (item.predicted_sentiment.toLowerCase() === "error")
           return (
             <div style={divStyle}>
               <span>
                 <Typewriter
                   onInit={(typewriter) => {
                     typewriter.typeString("❌ ").start();
-                    typewriter.typeString(item.log).start();
+                    typewriter.typeString(item.Log).start();
                   }}
                 />
               </span>
             </div>
           );
-        else if (item.sentiment === "warning")
+        else if (item.predicted_sentiment.toLowerCase() === "warning")
           return (
             <div style={divStyle}>
               <Typewriter
                 onInit={(typewriter) => {
                   typewriter.typeString("🛑 ").start();
-                  typewriter.typeString(item.log).start();
+                  typewriter.typeString(item.Log).start();
                 }}
               />
             </div>
           );
-        else if (item.sentiment === "info")
+        else if (item.predicted_sentiment.toLowerCase() === "info")
           return (
             <div style={divStyle}>
               <Typewriter
                 onInit={(typewriter) => {
                   typewriter.typeString("ℹ️ ").start();
-                  typewriter.typeString(item.log).start();
+                  typewriter.typeString(item.Log).start();
                 }}
               />
             </div>

@@ -1,0 +1,12 @@
+graph TD
+    A[Data Collection] -->|Collect from Docker logs| B
+    B[Preprocessing] --> C[Lowercasing]
+    B --> E[Remove Punctuation]
+    B --> D[Tokenization/Lemmatization]
+    C --> F[Feature Engineering]
+    D --> F
+    E --> F
+    F --> G[Model Selection]
+    G -->|Select BERT| H[Model Training]
+    H --> I[Model Evaluation]
+    I --> J[Model Testing]

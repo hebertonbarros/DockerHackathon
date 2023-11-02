@@ -3,6 +3,7 @@ import Papa from "papaparse";
 import axios from "axios";
 import backgroundImage from "./assets/background.png";
 import TextOutput from "./TextOutput";
+import SortIcon from '@mui/icons-material/Sort';
 
 const LogClassifier = () => {
 
@@ -92,6 +93,8 @@ const LogClassifier = () => {
           justifyContent: "center",
           alignItems: "center",
           backgroundImage: `url(${backgroundImage})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
           paddingLeft: "2%",
           color: "#D5D7DF",
         }}
@@ -123,6 +126,7 @@ const LogClassifier = () => {
 
         {/* Log output area */}
         {showOutputArea ? (
+          
           <div
             style={{
               width: "60%",
@@ -138,6 +142,10 @@ const LogClassifier = () => {
               transition: "opacity 1s",
             }}
           >
+            <SortIcon 
+            sx={{ padding: "2%", position: 'absolute', float: 'right'}} 
+            onClick={()=> {console.log('clikced')}}
+            />
             <TextOutput data={displayData} />
           </div>
         ) : (

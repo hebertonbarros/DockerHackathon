@@ -53,7 +53,7 @@ const LogClassifier = () => {
       // Send a GET request to the Flask API endpoint
       // const response = await axios.get("http://127.0.0.1:3010/api/analyzeLogs");
       const response = await axios.post(
-        "http://127.0.0.1:3010/api/analyzeLogs",
+        "http://3.143.226.233:3010/api/analyzeLogs",
         { log_data: inputData }
       );
 

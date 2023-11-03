@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3010
 
 # Start the Flask application
-CMD ["flask", "run", "--host=3.143.226.233", "--port=3010"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=3010"]

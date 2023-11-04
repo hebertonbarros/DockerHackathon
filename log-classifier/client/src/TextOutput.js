@@ -17,7 +17,6 @@ const TextOutput = (incomingData) => {
   // console.log(data);
 
   const handleSortLogs = () => {
-    console.log("clicked");
     // Sort the logList by level using the specified order
     const sortedData = [...data].sort((a, b) => {
       const levelA = levelOrder.indexOf(a.predicted_sentiment);
@@ -25,7 +24,6 @@ const TextOutput = (incomingData) => {
 
       return levelA - levelB;
     });
-    console.log(sortedData);
     setData(sortedData);
   };
 

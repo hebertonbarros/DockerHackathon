@@ -3,18 +3,12 @@ import Papa from "papaparse";
 import axios from "axios";
 import backgroundImage from "./assets/background.png";
 import TextOutput from "./TextOutput";
-import SortIcon from "@mui/icons-material/Sort";
 
 const LogClassifier = () => {
   const [showOutputArea, setShowOutputArea] = useState(false);
   const [showTextBox, setShowTextBox] = useState(false);
   const [displayData, setDisplayData] = useState([]);
-  const [sortData, setSortData] = useState([]);
-  const [showSortData, setShowSortData] = useState(false);
   const [inputData, setInputData] = useState([]);
-
-  const levelOrder = ["CRITICAL", "ERROR", "WARNING", "DEBUG", "INFO"];
-
 
   useEffect(() => {
     if (inputData.length > 0) {
@@ -26,7 +20,7 @@ const LogClassifier = () => {
     if (showOutputArea) {
       const timer = setTimeout(() => {
         setShowTextBox(true);
-      }, 5000);
+      }, 4000);
 
       // Clear the timeout to prevent it from firing if the component unmounts
       return () => clearTimeout(timer);
@@ -85,18 +79,7 @@ const LogClassifier = () => {
     }
   }
 
-  const handleSortLogs = () => {
-
-    // Sort the logList by level using the specified order
-    const sortedData = displayData.sort((a, b) => {
-      const levelA = levelOrder.indexOf(a.predicted_sentiment);
-      const levelB = levelOrder.indexOf(b.predicted_sentiment);
-
-      return levelA - levelB;
-    });
-    setSortData(sortedData)
-  };
-
+  console.log(displayData)
   return (
     <>
       <div
@@ -157,11 +140,8 @@ const LogClassifier = () => {
               transition: "opacity 1s",
             }}
           >
-            <SortIcon
-              sx={{ padding: "2%", position: "absolute", float: "right" }}
-              onClick={handleSortLogs}
-            />
-            <TextOutput data={showSortData ? sortData : displayData} />
+            
+            <TextOutput data={displayData} />
           </div>
         ) : (
           <></>

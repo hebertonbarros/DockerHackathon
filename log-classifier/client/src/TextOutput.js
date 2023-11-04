@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import Typewriter from "react-typewriter";
-import Typewriter from "typewriter-effect";
+// import Typewriter from "typewriter-effect";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SortIcon from "@mui/icons-material/Sort";
 
@@ -12,12 +11,10 @@ const TextOutput = (incomingData) => {
   const levelOrder = ["CRITICAL", "ERROR", "WARNING", "DEBUG", "INFO"];
 
   useEffect(() => {
-    console.log("in here");
-    console.log(incomingData);
     setData(incomingData.data);
   }, [incomingData]);
 
-  console.log(data);
+  // console.log(data);
 
   const handleSortLogs = () => {
     console.log("clicked");
@@ -46,7 +43,7 @@ const TextOutput = (incomingData) => {
       >
         {data.length > 0 &&
           data?.map((item, index) => {
-            console.log(item.predicted_sentiment, item.Log);
+            // console.log(item.predicted_sentiment, item.Log);
             if (item.predicted_sentiment.toLowerCase() === "error")
               return (
                 <div style={divStyle}>
